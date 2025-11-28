@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Pagination</title>
+
+    <style>
+        body {
+          font-family: Arial;
+          padding: 20px;
+        }
+
+        .buttons {
+          margin-top: 20px;
+        }
+
+        button {
+          padding: 8px 16px;
+          margin: 5px;
+          cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<h2>Paginate Student Records</h2>
+
+<ul id="studentList"></ul>
+
+<div class="buttons">
+    <button id="prevBtn">Previous</button>
+    <span id="pageNum"></span>
+    <button id="nextBtn">Next</button>
+</div>
+
+<script>
+    let students = [];
+    for (let i = 1; i <= 100; i++) {
+        students.push("Student " + i);
+    }
+
+    let currentPage = 1;
+    let perPage = 10;
+
+    function displayStudents() {
+        let start = (currentPage - 1) * perPage;
+        let end = start + perPage;
+
+        let list = students.slice(start, end);
+        document.getElementById("studentList").innerHTML =
+            list.map(s => `<li>${s}</li>`).join("");
+
+        document.getElementById("pageNum").innerText = "Page " + currentPage;
+    }
+
+    document.getElementById("nextBtn").onclick = () => {
+        if (currentPage * perPage < students.length) {
+            currentPage++;
+            displayStudents();
+        }
+    };
+
+    document.getElementById("prevBtn").onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            displayStudents();
+        }
+    };
+
+    displayStudents();
+</script>
+
+</body>
+</html>
